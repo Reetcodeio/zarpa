@@ -1,0 +1,102 @@
+# Release config for the Zarpa CLI. Docs: https://goreleaser.com
+# Run locally (no publishing): goreleaser release --snapshot --clean
+version: 2
+project_name: zarpa
+
+builds:
+  - id: zarpa
+    main: ./cmd/zarpa
+    binary: zarpa
+    env: [CGO_ENABLED=0]
+    goos: [darwin, linux, windows]
+    goarch: [amd64, arm64]
+    flags: [-trimpath]
+    ldflags:
+      - -s -w
+      - -X github.com/Reetcodeio/zarpa/internal/version.Version={{ .Version }}
+      - -X github.com/Reetcodeio/zarpa/internal/version.Commit={{ .ShortCommit }}
+      - -X github.com/Reetcodeio/zarpa/internal/version.Date={{ .CommitDate }}
+    # Reproducible builds: file times come from the commit, not the build machine.
+    mod_timestamp: "{{ .CommitTimestamp }}"
+
+# One macOS binary that runs on both Apple Silicon and Intel.
+universal_binaries:
+  - replace: true
+
+# macOS signing + notarization (runs only when the Apple secrets are set).
+notarize:
+  macos:
+    - enabled: '{{ isEnvSet "MACOS_SIGN_P12" }}'
+      sign:
+        certificate: "{{ .Env.MACOS_SIGN_P12 }}"
+        password: "{{ .Env.MACOS_SIGN_PASSWORD }}"
+      notarize:
+        issuer_id: "{{ .Env.MACOS_NOTARY_ISSUER_ID }}"
+        key_id: "{{ .Env.MACOS_NOTARY_KEY_ID }}"
+        key: "{{ .Env.MACOS_NOTARY_KEY }}"
+        wait: true
+
+archives:
+  - id: default
+    formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    files: [LICENSE, NOTICE, README.md]
+
+checksum:
+  name_template: checksums.txt
+  algorithm: sha256
+
+# SBOM for every archive (needs syft on the release machine).
+sboms:
+  - artifacts: archive
+
+# Keyless cosign signature of the checksum file. Verifying it proves every
+# archive came from this repo's release workflow.
+signs:
+  - cmd: cosign
+    artifacts: checksum
+    certificate: "${artifact}.pem"
+    signature: "${artifact}.sig"
+    args:
+      - sign-blob
+      - "--output-certificate=${certificate}"
+      - "--output-signature=${signature}"
+      - "${artifact}"
+      - --yes
+    output: true
+
+homebrew_casks:
+  - name: zarpa
+    repository:
+      owner: "{{ .Env.HOMEBREW_TAP_OWNER }}"
+      name: homebrew-tap
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    homepage: "https://zarpa.dev"
+    description: "Find every API key on your machine and see where it lives"
+    license: Apache-2.0
+    skip_upload: auto
+
+scoops:
+  - name: zarpa
+    repository:
+      owner: "{{ .Env.HOMEBREW_TAP_OWNER }}"
+      name: scoop-bucket
+      token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    description: "Find every API key on your machine and see where it lives"
+    license: Apache-2.0
+    skip_upload: auto
+
+changelog:
+  sort: asc
+  filters:
+    exclude: ["^docs:", "^test:", "^chore:"]
+
+release:
+  github:
+    owner: "{{ .Env.HOMEBREW_TAP_OWNER }}"
+    name: zarpa
+  draft: true
+  prerelease: auto

@@ -1,0 +1,423 @@
+{
+  "version": "2026.10.30",
+  "rules": [
+    {
+      "id": "anthropic-admin-key",
+      "provider": "anthropic",
+      "name": "Anthropic Admin API key",
+      "severity": "critical",
+      "regex": "sk-ant-admin01-[A-Za-z0-9_\\-]{20,}",
+      "keywords": [
+        "sk-ant-admin"
+      ],
+      "prefixLen": 15,
+      "priority": 100,
+      "description": "Organization admin key: can list, disable and archive every API key in the org."
+    },
+    {
+      "id": "anthropic-api-key",
+      "provider": "anthropic",
+      "name": "Anthropic API key",
+      "severity": "high",
+      "regex": "sk-ant-api03-[A-Za-z0-9_\\-]{20,}",
+      "keywords": [
+        "sk-ant-api"
+      ],
+      "prefixLen": 13,
+      "priority": 90
+    },
+    {
+      "id": "anthropic-key",
+      "provider": "anthropic",
+      "name": "Anthropic key (other type)",
+      "severity": "high",
+      "regex": "sk-ant-[a-z]+[0-9]{2}-[A-Za-z0-9_\\-]{20,}",
+      "keywords": [
+        "sk-ant-"
+      ],
+      "prefixLen": 7,
+      "priority": 80
+    },
+    {
+      "id": "openai-admin-key",
+      "provider": "openai",
+      "name": "OpenAI Admin key",
+      "severity": "critical",
+      "regex": "sk-admin-[A-Za-z0-9_\\-]{20,}",
+      "keywords": [
+        "sk-admin-"
+      ],
+      "prefixLen": 9,
+      "priority": 100
+    },
+    {
+      "id": "openai-project-key",
+      "provider": "openai",
+      "name": "OpenAI project key",
+      "severity": "high",
+      "regex": "sk-proj-[A-Za-z0-9_\\-]{20,}",
+      "keywords": [
+        "sk-proj-"
+      ],
+      "prefixLen": 8,
+      "priority": 90
+    },
+    {
+      "id": "openai-service-account-key",
+      "provider": "openai",
+      "name": "OpenAI service-account key",
+      "severity": "high",
+      "regex": "sk-svcacct-[A-Za-z0-9_\\-]{20,}",
+      "keywords": [
+        "sk-svcacct-"
+      ],
+      "prefixLen": 11,
+      "priority": 90
+    },
+    {
+      "id": "openai-legacy-key",
+      "provider": "openai",
+      "name": "OpenAI key (legacy format)",
+      "severity": "high",
+      "regex": "\\bsk-[A-Za-z0-9]{20}T3BlbkFJ[A-Za-z0-9]{20}\\b",
+      "keywords": [
+        "T3BlbkFJ"
+      ],
+      "prefixLen": 3,
+      "priority": 85
+    },
+    {
+      "id": "openrouter-key",
+      "provider": "openrouter",
+      "name": "OpenRouter API key",
+      "severity": "high",
+      "regex": "sk-or-v1-[a-f0-9]{64}",
+      "keywords": [
+        "sk-or-v1-"
+      ],
+      "prefixLen": 9,
+      "priority": 90
+    },
+    {
+      "id": "google-api-key",
+      "provider": "google",
+      "name": "Google API key (Gemini, Maps, Firebase)",
+      "severity": "high",
+      "regex": "AIza[0-9A-Za-z_\\-]{35}",
+      "keywords": [
+        "AIza"
+      ],
+      "prefixLen": 4,
+      "priority": 90
+    },
+    {
+      "id": "google-auth-key",
+      "provider": "google",
+      "name": "Google auth key (Gemini, AQ. format)",
+      "severity": "high",
+      "regex": "AQ\\.Ab[0-9A-Za-z_\\-]{30,300}",
+      "keywords": [
+        "AQ.Ab"
+      ],
+      "prefixLen": 5,
+      "priority": 90
+    },
+    {
+      "id": "stripe-live-secret-key",
+      "provider": "stripe",
+      "name": "Stripe live secret key",
+      "severity": "critical",
+      "regex": "sk_live_[0-9a-zA-Z]{24,}",
+      "keywords": [
+        "sk_live_"
+      ],
+      "prefixLen": 8,
+      "priority": 95
+    },
+    {
+      "id": "stripe-live-restricted-key",
+      "provider": "stripe",
+      "name": "Stripe live restricted key",
+      "severity": "high",
+      "regex": "rk_live_[0-9a-zA-Z]{24,}",
+      "keywords": [
+        "rk_live_"
+      ],
+      "prefixLen": 8,
+      "priority": 95
+    },
+    {
+      "id": "stripe-test-secret-key",
+      "provider": "stripe",
+      "name": "Stripe test secret key",
+      "severity": "low",
+      "regex": "sk_test_[0-9a-zA-Z]{24,}",
+      "keywords": [
+        "sk_test_"
+      ],
+      "prefixLen": 8,
+      "priority": 90
+    },
+    {
+      "id": "stripe-webhook-secret",
+      "provider": "stripe",
+      "name": "Stripe webhook signing secret",
+      "severity": "medium",
+      "regex": "whsec_[A-Za-z0-9+/=]{24,}",
+      "keywords": [
+        "whsec_"
+      ],
+      "prefixLen": 6,
+      "priority": 90
+    },
+    {
+      "id": "supabase-secret-key",
+      "provider": "supabase",
+      "name": "Supabase secret key",
+      "severity": "critical",
+      "regex": "sb_secret_[A-Za-z0-9_\\-]{20,}",
+      "keywords": [
+        "sb_secret_"
+      ],
+      "prefixLen": 10,
+      "priority": 95
+    },
+    {
+      "id": "supabase-service-role-jwt",
+      "provider": "supabase",
+      "name": "Supabase service_role JWT",
+      "severity": "critical",
+      "regex": "eyJ[A-Za-z0-9_\\-]{10,}\\.eyJ[A-Za-z0-9_\\-]{10,}\\.[A-Za-z0-9_\\-]{10,}",
+      "keywords": [
+        "eyJ"
+      ],
+      "prefixLen": 3,
+      "priority": 90,
+      "validate": "jwt-service-role",
+      "description": "Only reported when the JWT payload says role=service_role; anon keys are public by design."
+    },
+    {
+      "id": "aws-access-key-id",
+      "provider": "aws",
+      "name": "AWS access key ID",
+      "severity": "high",
+      "regex": "\\b(?:AKIA|ASIA)[0-9A-Z]{16}\\b",
+      "keywords": [
+        "AKIA",
+        "ASIA"
+      ],
+      "prefixLen": 4,
+      "priority": 90
+    },
+    {
+      "id": "aws-secret-access-key",
+      "provider": "aws",
+      "name": "AWS secret access key",
+      "severity": "critical",
+      "regex": "(?i)aws_?secret_?access_?key[\"']?\\s*[:=]\\s*[\"']?([A-Za-z0-9/+=]{40})\\b",
+      "secretGroup": 1,
+      "keywords": [
+        "secret"
+      ],
+      "caseInsensitiveKeywords": true,
+      "prefixLen": 0,
+      "priority": 90
+    },
+    {
+      "id": "github-pat-classic",
+      "provider": "github",
+      "name": "GitHub personal access token (classic)",
+      "severity": "high",
+      "regex": "ghp_[A-Za-z0-9]{36}",
+      "keywords": [
+        "ghp_"
+      ],
+      "prefixLen": 4,
+      "priority": 90
+    },
+    {
+      "id": "github-pat-fine-grained",
+      "provider": "github",
+      "name": "GitHub fine-grained personal access token",
+      "severity": "high",
+      "regex": "github_pat_[A-Za-z0-9_]{82}",
+      "keywords": [
+        "github_pat_"
+      ],
+      "prefixLen": 11,
+      "priority": 90
+    },
+    {
+      "id": "github-app-token",
+      "provider": "github",
+      "name": "GitHub OAuth or app token",
+      "severity": "high",
+      "regex": "\\b(?:gho|ghu|ghs|ghr)_[A-Za-z0-9]{36}\\b",
+      "keywords": [
+        "gho_",
+        "ghu_",
+        "ghs_",
+        "ghr_"
+      ],
+      "prefixLen": 4,
+      "priority": 90
+    },
+    {
+      "id": "slack-token",
+      "provider": "slack",
+      "name": "Slack token",
+      "severity": "high",
+      "regex": "xox[baprs]-[0-9A-Za-z]{6,}-[A-Za-z0-9\\-]{8,}",
+      "keywords": [
+        "xox"
+      ],
+      "prefixLen": 5,
+      "priority": 90
+    },
+    {
+      "id": "slack-webhook-url",
+      "provider": "slack",
+      "name": "Slack incoming webhook URL",
+      "severity": "medium",
+      "regex": "https://hooks\\.slack\\.com/services/T[A-Z0-9]+/B[A-Z0-9]+/[A-Za-z0-9]{20,}",
+      "keywords": [
+        "hooks.slack.com"
+      ],
+      "prefixLen": 34,
+      "priority": 90
+    },
+    {
+      "id": "twilio-api-key",
+      "provider": "twilio",
+      "name": "Twilio API key SID",
+      "severity": "medium",
+      "regex": "\\bSK[0-9a-f]{32}\\b",
+      "keywords": [
+        "SK"
+      ],
+      "prefixLen": 2,
+      "priority": 70
+    },
+    {
+      "id": "sendgrid-api-key",
+      "provider": "sendgrid",
+      "name": "SendGrid API key",
+      "severity": "high",
+      "regex": "SG\\.[A-Za-z0-9_\\-]{22}\\.[A-Za-z0-9_\\-]{43}",
+      "keywords": [
+        "SG."
+      ],
+      "prefixLen": 3,
+      "priority": 90
+    },
+    {
+      "id": "huggingface-token",
+      "provider": "huggingface",
+      "name": "Hugging Face access token",
+      "severity": "high",
+      "regex": "\\bhf_[A-Za-z0-9]{34,}\\b",
+      "keywords": [
+        "hf_"
+      ],
+      "prefixLen": 3,
+      "priority": 85
+    },
+    {
+      "id": "groq-api-key",
+      "provider": "groq",
+      "name": "Groq API key",
+      "severity": "high",
+      "regex": "\\bgsk_[A-Za-z0-9]{48,}\\b",
+      "keywords": [
+        "gsk_"
+      ],
+      "prefixLen": 4,
+      "priority": 90
+    },
+    {
+      "id": "xai-api-key",
+      "provider": "xai",
+      "name": "xAI API key",
+      "severity": "high",
+      "regex": "\\bxai-[A-Za-z0-9]{70,}\\b",
+      "keywords": [
+        "xai-"
+      ],
+      "prefixLen": 4,
+      "priority": 90
+    },
+    {
+      "id": "private-key-block",
+      "provider": "crypto",
+      "name": "Private key (PEM block)",
+      "severity": "high",
+      "regex": "-----BEGIN [A-Z ]*PRIVATE KEY[A-Z ]*-----(?s:.+?)-----END [A-Z ]*PRIVATE KEY[A-Z ]*-----",
+      "keywords": [
+        "PRIVATE KEY"
+      ],
+      "prefixLen": 0,
+      "priority": 90,
+      "multiline": true,
+      "skipInTests": true
+    },
+    {
+      "id": "generic-secret",
+      "provider": "generic",
+      "name": "High-entropy secret next to a key-like name",
+      "severity": "medium",
+      "regex": "(?i)([a-z0-9_.\\-]*(?:api[_\\-]?key|secret|token|passwd|password|auth[_\\-]?key|access[_\\-]?key|private[_\\-]?key|client[_\\-]?secret)[a-z0-9_.\\-]*)[\"']?\\s*(?::=|=>|=|:)\\s*[\"'`]?([A-Za-z0-9_\\-+/=.~]{20,200})",
+      "secretGroup": 2,
+      "keywords": [
+        "key",
+        "secret",
+        "token",
+        "passw"
+      ],
+      "caseInsensitiveKeywords": true,
+      "prefixLen": 0,
+      "priority": 10,
+      "entropyMin": 3.5,
+      "generic": true,
+      "skipInTests": true
+    }
+  ],
+  "allowlist": {
+    "valueSubstrings": [
+      "example",
+      "xxxxxx",
+      "placeholder",
+      "your_",
+      "your-",
+      "yourkey",
+      "changeme",
+      "change_me",
+      "dummy",
+      "redacted",
+      "sample",
+      "insert_",
+      "replace_",
+      "replaceme",
+      "notreal",
+      "not_real",
+      "fake_",
+      "_fake",
+      "${",
+      "{{",
+      "<",
+      ">",
+      "process.env",
+      "os.environ",
+      "getenv"
+    ],
+    "valueRegexes": [
+      "(?i)^(?:x+|0+|1+|\\*+|\\.+|-+)$",
+      "(?i)(?:abcdefgh|12345678|01234567|qwertyui)"
+    ],
+    "lineMarkers": [
+      "zarpa:allow",
+      "zarpa:ignore",
+      "gitleaks:allow",
+      "pragma: allowlist secret"
+    ]
+  }
+}

@@ -1,0 +1,13 @@
+# golangci-lint v2. `make lint` runs it when installed; CI runs it on every push.
+# errcheck + govet for now (both clean). Add staticcheck once it
+# has been run and cleaned once.
+version: "2"
+linters:
+  default: none
+  enable:
+    - errcheck
+    - govet
+  exclusions:
+    # Printing to the terminal, Close and Flush: the usual Go exceptions.
+    presets:
+      - std-error-handling
