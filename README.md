@@ -108,16 +108,17 @@ Other output formats: `--json`, `--sarif -o file`. Skip paths with a `.zarpaigno
 
 Each key is identified by a fingerprint, `HMAC-SHA256(salt, key)`, with a random salt kept in your keychain. Details, and where in the code to check each claim: [docs/SECURITY.md](docs/SECURITY.md).
 
-## Zarpa Cloud (optional, paid)
+## Zarpa Cloud (optional, paid; not open yet)
 
 The scanner tells you where keys are. Zarpa Cloud watches what they *spend*: it reads each key's usage at Anthropic, OpenAI and Google, alerts you on spikes, and freezes a key automatically or with one tap on your phone. If a tool you use is breached, `zarpa panic --tool <name>` freezes every key it touched and gives you a checklist.
+
+Zarpa Cloud is still being built; pre-order at **[zarpa.dev](https://zarpa.dev)**. Once it opens,
+the scanner connects to it with:
 
 ```sh
 zarpa login --api https://api.zarpa.dev   # paste a CLI token from the dashboard
 zarpa sync ~ --dry-run                    # show exactly what would be uploaded: fingerprints and locations, never keys
 ```
-
-Pre-order at **[zarpa.dev](https://zarpa.dev)**.
 
 ## Build from source
 
@@ -127,7 +128,7 @@ make test       # tests (make race: with the race detector)
 make demo       # scan a fake machine full of fake keys
 ```
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Report security issues to security@zarpa.dev.
+See [CONTRIBUTING.md](CONTRIBUTING.md). Report security issues privately, not in a public issue: see [docs/SECURITY.md](docs/SECURITY.md#reporting-a-vulnerability).
 
 ## License
 

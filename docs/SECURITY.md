@@ -5,8 +5,9 @@ the CLI does with them, so you can check every claim against the code.
 
 ## Reporting a vulnerability
 
-Email **security@zarpa.dev**. Please do not open a public issue for a
-vulnerability.
+Please don't open a public issue for a vulnerability. Report it privately,
+either on GitHub (this repository's **Security** tab → **Report a vulnerability**)
+or by email to **security@zarpa.dev**.
 
 ## What the CLI does
 

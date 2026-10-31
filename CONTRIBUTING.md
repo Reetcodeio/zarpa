@@ -40,5 +40,5 @@ comment on that line silences it.
 
 ## Security issues
 
-Please email security@zarpa.dev instead of opening an issue (see
-`docs/SECURITY.md`).
+Please report them privately instead of opening an issue: the **Security** tab →
+**Report a vulnerability**, or security@zarpa.dev (see `docs/SECURITY.md`).
