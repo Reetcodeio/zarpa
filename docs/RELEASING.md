@@ -6,13 +6,21 @@ Releases are built by GoReleaser from a git tag, in CI (`.github/workflows/relea
 
 | What | Why | Where it goes |
 |---|---|---|
-| Public `homebrew-tap` and `scoop-bucket` repos under the same account (`Reetcodeio/homebrew-tap`, `Reetcodeio/scoop-bucket`) | `brew install --cask reetcodeio/tap/zarpa` / `scoop install` | Created by you, with a README (GoReleaser can't add the first file to an empty repo) |
-| `HOMEBREW_TAP_TOKEN` secret | Lets the release push the formula to those repos | Repo secret (a fine-grained token with write access to those two repos only) |
-| Apple Developer ID certificate as base64 `.p12` → `MACOS_SIGN_P12`, plus `MACOS_SIGN_PASSWORD` | Signs the macOS binary | Repo secrets |
-| App Store Connect API key → `MACOS_NOTARY_ISSUER_ID`, `MACOS_NOTARY_KEY_ID`, `MACOS_NOTARY_KEY` | Notarizes it so Gatekeeper does not block it | Repo secrets |
+| Public `homebrew-tap` and `scoop-bucket` repos under the same account (`Reetcodeio/homebrew-tap`, `Reetcodeio/scoop-bucket`) | `brew install reetcodeio/tap/zarpa` / `scoop install zarpa` | Created by you, with a README (GoReleaser can't add the first file to an empty repo) |
+| `HOMEBREW_TAP_TOKEN` secret | Lets the release push the Homebrew formula and the Scoop manifest to those repos | Repo secret (a fine-grained token with write access to those two repos only) |
+| *Optional, later:* Apple Developer ID certificate as base64 `.p12` → `MACOS_SIGN_P12`, plus `MACOS_SIGN_PASSWORD` | Signs the macOS binary | Repo secrets |
+| *Optional, later:* App Store Connect API key → `MACOS_NOTARY_ISSUER_ID`, `MACOS_NOTARY_KEY_ID`, `MACOS_NOTARY_KEY` | Notarizes it so Gatekeeper accepts it when it is downloaded in a browser | Repo secrets |
 | Azure Artifact Signing (Basic) | Signs the Windows `.exe` | Not wired yet: add a Windows job that signs `zarpa.exe` before archiving |
 
-Without the Apple secrets, the release still works; the macOS binary is just unsigned.
+Without the Apple secrets the release still works; the macOS binary is unsigned
+(only the ad-hoc signature Apple Silicon requires). That is fine for the three ways the README installs it: the Homebrew **formula**,
+`install.sh` (curl) and `go install` don't set macOS's quarantine flag, and Gatekeeper only checks
+quarantined files. It is *not* fine for a cask (Homebrew quarantines cask downloads) or for an
+archive downloaded in a browser; the README says how to handle the latter. Add the Apple secrets
+when the $99/year is worth it: the release workflow notarizes on its own once they exist.
+
+Homebrew 6 asks users to trust third-party taps. Installing with the full name
+(`brew install reetcodeio/tap/zarpa`) trusts just that formula, so no extra step is needed.
 
 ## Each release
 

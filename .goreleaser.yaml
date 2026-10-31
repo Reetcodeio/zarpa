@@ -23,7 +23,9 @@ builds:
 universal_binaries:
   - replace: true
 
-# macOS signing + notarization (runs only when the Apple secrets are set).
+# macOS signing + notarization: optional, runs only when the Apple secrets are set.
+# Without them the macOS binary is unsigned; Homebrew installs it as a formula
+# (below), which macOS doesn't quarantine, so it runs anyway.
 notarize:
   macos:
     - enabled: '{{ isEnvSet "MACOS_SIGN_P12" }}'
@@ -68,16 +70,25 @@ signs:
       - --yes
     output: true
 
-homebrew_casks:
+# A Homebrew formula, not a cask: Homebrew quarantines cask downloads, and
+# macOS then blocks a binary that isn't notarized by Apple. Formulae aren't
+# quarantined. GoReleaser marks `brews` deprecated (since v2.10, no removal
+# date); if it is removed, publish a formula that builds from source instead.
+brews:
   - name: zarpa
     repository:
       owner: "{{ .Env.HOMEBREW_TAP_OWNER }}"
       name: homebrew-tap
       token: "{{ .Env.HOMEBREW_TAP_TOKEN }}"
+    directory: Formula
     homepage: "https://zarpa.dev"
     description: "Find every API key on your machine and see where it lives"
     license: Apache-2.0
     skip_upload: auto
+    install: |
+      bin.install "zarpa"
+    test: |
+      system "#{bin}/zarpa", "version"
 
 scoops:
   - name: zarpa

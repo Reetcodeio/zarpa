@@ -18,8 +18,8 @@ leave your machine.
 ## Install
 
 ```sh
-# macOS (Apple Silicon and Intel)
-brew install --cask reetcodeio/tap/zarpa
+# macOS (Apple Silicon and Intel) or Linux
+brew install reetcodeio/tap/zarpa
 
 # macOS or Linux: checks the SHA-256, and the cosign signature when cosign is installed
 curl -fsSL https://raw.githubusercontent.com/Reetcodeio/zarpa/main/install.sh | sh
@@ -28,7 +28,9 @@ curl -fsSL https://raw.githubusercontent.com/Reetcodeio/zarpa/main/install.sh | 
 go install github.com/Reetcodeio/zarpa/cmd/zarpa@latest
 ```
 
-Windows: download the `.zip` from [Releases](https://github.com/Reetcodeio/zarpa/releases).
+Windows: download the `.zip` from [Releases](https://github.com/Reetcodeio/zarpa/releases), or `scoop bucket add zarpa https://github.com/Reetcodeio/scoop-bucket` then `scoop install zarpa`.
+
+Downloading the macOS archive in a browser? The binary isn't notarized by Apple yet, so macOS blocks it; use one of the commands above, or run `xattr -d com.apple.quarantine ./zarpa` after checking `checksums.txt`.
 
 ## Use
 
