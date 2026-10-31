@@ -6,7 +6,7 @@ Releases are built by GoReleaser from a git tag, in CI (`.github/workflows/relea
 
 | What | Why | Where it goes |
 |---|---|---|
-| Public `homebrew-tap` and `scoop-bucket` repos under the same account (`Reetcodeio/homebrew-tap`, `Reetcodeio/scoop-bucket`) | `brew install --cask reetcodeio/tap/zarpa` / `scoop install` | Created by you, empty |
+| Public `homebrew-tap` and `scoop-bucket` repos under the same account (`Reetcodeio/homebrew-tap`, `Reetcodeio/scoop-bucket`) | `brew install --cask reetcodeio/tap/zarpa` / `scoop install` | Created by you, with a README (GoReleaser can't add the first file to an empty repo) |
 | `HOMEBREW_TAP_TOKEN` secret | Lets the release push the formula to those repos | Repo secret (a fine-grained token with write access to those two repos only) |
 | Apple Developer ID certificate as base64 `.p12` → `MACOS_SIGN_P12`, plus `MACOS_SIGN_PASSWORD` | Signs the macOS binary | Repo secrets |
 | App Store Connect API key → `MACOS_NOTARY_ISSUER_ID`, `MACOS_NOTARY_KEY_ID`, `MACOS_NOTARY_KEY` | Notarizes it so Gatekeeper does not block it | Repo secrets |
